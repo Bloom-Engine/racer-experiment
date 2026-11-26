@@ -1,8 +1,9 @@
 # One racing game, six ways
 
-The same small arcade racing game was built six times from **one spec and one shared asset set**. The builds
-use plain Three.js in the browser, a native port of that Three.js game, Bloom Engine's own APIs, a
-Three.js-plus-Bloom hybrid, a port of a real open-source Three.js project, and Bevy in Rust. Every build was
+The same small arcade racing game was built five times from **one spec and one shared asset set**: plain
+Three.js in the browser, a native port of that Three.js game, Bloom Engine's own APIs, a Three.js-plus-Bloom
+hybrid, and Bevy in Rust. All five reached a playable 3-lap race. A sixth arm applied the native port to a real
+open-source Three.js project instead; **that port is unfinished** (see D below). Every build was
 done by the same AI coding agent (Claude Opus 5.5 in Claude Code), working from a fixed prompt with no human
 code edits. This repository has the prompts, the code of every arm, the agents' own logs, the benchmarks and
 a WebGPU spike.
@@ -28,10 +29,10 @@ Write-up: **[bloomengine.dev/blog/one-racing-game-six-ways](https://bloomengine.
 | Arm | What | Folder | Agent's own log |
 |---|---|---|---|
 | A1 | Three.js + TypeScript, browser | [`arms/a1-threejs-web`](arms/a1-threejs-web) | [NOTES](arms/a1-threejs-web/NOTES.md) |
-| A2 | A1 compiled to native with Perry, running on Bloom's Three.js bridge, minimal changes | [`arms/a2-threejs-on-bloom`](arms/a2-threejs-on-bloom) | [PORT_LOG](arms/a2-threejs-on-bloom/PORT_LOG.md) |
+| A2 | A1 compiled to native with Perry, running on Bloom's Three.js bridge, minimal changes | [`arms/a2-threejs-on-bloom`](arms/a2-threejs-on-bloom) | [PORT_LOG](arms/a2-threejs-on-bloom/PORT_LOG.md), [NOTES](arms/a2-threejs-on-bloom/NOTES.md) (summary of the log) |
 | B | Bloom Engine's own APIs (rendering, Jolt physics, audio, UI), TypeScript compiled by Perry | [`arms/b-bloom-native`](arms/b-bloom-native) | [NOTES](arms/b-bloom-native/NOTES.md), [FRICTION](arms/b-bloom-native/BLOOM_FRICTION.md) |
 | C | Hybrid: Three.js on the bridge for rendering, Bloom for physics, input, audio, HUD and storage | [`arms/c-hybrid`](arms/c-hybrid) | [NOTES](arms/c-hybrid/NOTES.md), [FRICTION](arms/c-hybrid/HYBRID_FRICTION.md) |
-| D | Port of a real open-source Three.js project ([brunosimon/folio-2025](https://github.com/brunosimon/folio-2025) @ `70764a9`) | [`arms/d-folio-port`](arms/d-folio-port) | [INVENTORY](arms/d-folio-port/INVENTORY.md), [PORT_LOG](arms/d-folio-port/PORT_LOG.md) |
+| D | Port of a real open-source Three.js project ([brunosimon/folio-2025](https://github.com/brunosimon/folio-2025) @ `70764a9`) | [`arms/d-folio-port`](arms/d-folio-port) | [INVENTORY](arms/d-folio-port/INVENTORY.md), [PORT_LOG](arms/d-folio-port/PORT_LOG.md) (**unfinished**) |
 | E | Bevy 0.20.1 + avian3d 0.8.0, Rust | [`arms/e-bevy`](arms/e-bevy) | [NOTES](arms/e-bevy/NOTES.md), [FRICTION](arms/e-bevy/BEVY_FRICTION.md) |
 
 Plus [`bench/`](bench) (sizes, startup, memory, and a browser head-to-head) and [`webgpu-spike/`](webgpu-spike)
@@ -43,7 +44,7 @@ Plus [`bench/`](bench) (sizes, startup, memory, and a browser head-to-head) and 
    * It took 1 h 28 min of wall-clock time, against about 2 h 14 min of active time for the hybrid and about
      3 h 09 min for Bevy.
    * It produced the smallest app: 71 MB on macOS and 76 MB on iOS, against 131 / 130 MB for Bevy.
-   * A one-line change rebuilt in 5.4 s. Bevy took 10–12 s in dev and 5 min 46 s in release, and the hybrid
+   * A one-line change rebuilt in 5.4 s. Bevy took 10–12 s in dev and 5 min 46 s for the same change in a release build (thin LTO), and the hybrid
      took about 2.5 min, because it recompiles three.js on every build.
    * It ran at a steady 60 fps (vsync cap) on an iPhone 16 Pro on the Low preset.
    * It also made the agent read the most: 61.7M input tokens, the highest of any arm (see the costs table).
@@ -52,7 +53,8 @@ Plus [`bench/`](bench) (sizes, startup, memory, and a browser head-to-head) and 
    bottleneck; the DOM/CSS HUD was.
    * On an iPhone 16 Pro the port ran at **38.4 fps** at first. The bridge's page engine spent 14–17 ms a frame
      on about 10,200 HUD draws.
-   * A phone profile (Low preset, flat HUD, page updates at 30 Hz) brought it to **59.5–59.8 fps**.
+   * A phone profile (Low preset, flat HUD stylesheet, page updates at 30 Hz) brought it to **59.5–59.8 fps**.
+     None of the three was enough alone: Low alone gave 43.9 fps, and Low plus 30 Hz gave 49.4.
    * A Web Audio emulation bug also took the game from 57 to 35 fps after about 3 minutes.
 3. **The same bridge gaps kept coming back** in A2, C and D:
    * `Points`, `Sprite`, `Line` and `InstancedMesh` are not drawn.
@@ -82,7 +84,8 @@ Plus [`bench/`](bench) (sizes, startup, memory, and a browser head-to-head) and 
    * It used 4.28 ms of page CPU per frame against 2.00 ms.
    * It used about 380 MB more RAM during a race.
 7. **Bevy got there, but it was the heaviest build.**
-   * A clean release build took 11 min 27 s, and binaries were 95 MB with default features.
+   * A clean macOS release build (empty target directory, Bevy default features) took 11 min 27 s, and
+     binaries were 95 MB.
    * Most of its friction was API renames between Bevy versions and ECS access conflicts reported without
      system names.
    * It never ran on a real phone; the only mobile number comes from the iOS simulator.
@@ -99,17 +102,20 @@ Plus [`bench/`](bench) (sizes, startup, memory, and a browser head-to-head) and 
 | One-line rebuild | – | ≈16 s | 5.4 s | ≈2.5 min | 10–12 s dev / 5:46 release |
 | macOS app | 36.5 MB web dist | 94 MB | 71 MB | 52 MB binary + 48 MB assets | 131 MB |
 | iOS app | – | 103 MB | 76 MB | ≈107 MB | 130 MB |
-| iPhone 16 Pro fps | – | 59.5–59.8 (phone profile) | 60 (vsync cap) | 59.96 avg, min 55.6 | not run on a device |
+| iPhone 16 Pro fps | – | 59.5–59.8 (Low preset + flat HUD + 30 Hz page; 38.4 without) | 60 (vsync cap) | 59.96 avg, min 55.6 | not run on a device |
 | Friction / port-log entries | – | 17 | 29 | 16 | 14 |
 
 The asset set itself took 63 model calls, 10.4M input and 191k output tokens, and about 34 min
-([BUILD_TOKENS](race-assets/BUILD_TOKENS.md)). D has no token record.
+([BUILD_TOKENS](race-assets/BUILD_TOKENS.md)). D is not in this table: its port is unfinished and it has no
+time or token record.
 
 Sources for every number: the arm's own NOTES, FRICTION, PORT_LOG and TOKEN_USAGE files, and [`bench/results`](bench/results).
 Token counts are sums of the per-call `usage` records in each Claude Code session log.
 
 ## Read this before quoting any number
 
+* **Arm D is unfinished.** The folio-2025 port stops before its required summary and never states whether the
+  game is playable; it is a map of what breaks, not a result to compare.
 * **One run per arm.** These are anecdotes with numbers attached, not statistics. Agents make different
   choices on a second run.
 * **The builder was an AI agent, not a team of humans.** The numbers say as much about how well each stack's
@@ -123,7 +129,9 @@ Token counts are sums of the per-call `usage` records in each Claude Code sessio
   or skid marks. The native size/startup run was a single launch on a busy machine.
 * **The toolchain moved during the experiment.** B used Perry 0.5.1664. C pinned 0.5.1663, because 1664
   miscompiled three.js. A2 built Perry from `main`.
-* **Gaps in the logs.** A2's `NOTES.md` is an unchanged copy of A1's, so A2's facts are in `PORT_LOG.md`. C
+* **Gaps in the logs.** A2's agent never updated its `NOTES.md`, so the file first published here was an
+  unchanged copy of A1's. On 2026-11-26 it was replaced with a short summary written from A2's `PORT_LOG.md`,
+  which remains the agent's own record; the original copy is in git history (commit `5425ad5`). C
   did not report its app sizes or an incremental build time; the numbers above come from `du`.
 
 ## Repository layout and what was removed
