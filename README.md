@@ -40,9 +40,10 @@ Plus [`bench/`](bench) (sizes, startup, memory, and a browser head-to-head) and 
 
 ## What we found
 
-1. **Bloom native (B) was the shortest path to a finished game.**
-   * It took 1 h 28 min of wall-clock time, against about 2 h 14 min of active time for the hybrid and about
-     3 h 09 min for Bevy.
+1. **Bloom native (B) was the shortest path to a finished native game.**
+   * It took 1 h 13 min of working time (wall-clock minus waits for the user), against 2 h 12 min for the
+     hybrid and 2 h 25 min for Bevy on the same basis. The browser-only Three.js build (A1) took 33 min, but it
+     is not a native app.
    * It produced the smallest app: 71 MB on macOS and 76 MB on iOS, against 131 / 130 MB for Bevy.
    * A one-line change rebuilt in 5.4 s. Bevy took 10–12 s in dev and 5 min 46 s for the same change in a release build (thin LTO), and the hybrid
      took about 2.5 min, because it recompiles three.js on every build.
@@ -94,16 +95,21 @@ Plus [`bench/`](bench) (sizes, startup, memory, and a browser head-to-head) and 
 
 | | A1 Three.js web | A2 port | B Bloom | C hybrid | E Bevy |
 |---|---|---|---|---|---|
-| Wall-clock time (agent) | not recorded | 2 h 57 min (≈2 h 38 working) | 1 h 28 min | 3 h 22 min (≈2 h 14 active) | ≈3 h 09 min |
+| Agent working time (wall-clock minus waits for the user)† | 33 min | 2 h 38 min | 1 h 13 min | 2 h 12 min | 2 h 25 min |
 | Model calls | 62 | 165 | 186 | 138 | 163 |
 | Input tokens (incl. cache) | 12.0M | 36.3M | 61.7M | 37.4M | ≈44.2M |
 | Output tokens | 175k | 112k | 184k | 156k | ≈214k |
-| Clean release build | – | ≈2 min | 267 s (+282 s engine) | ≈2.5 min | 11 min 27 s |
+| Clean release build | – | ≈2 min first native build, not labelled release, excl. one-off ≈26 min Perry build | 267 s (+282 s engine) | ≈2.5 min | 11 min 27 s |
 | One-line rebuild | – | ≈16 s | 5.4 s | ≈2.5 min | 10–12 s dev / 5:46 release |
-| macOS app | 36.5 MB web dist | 94 MB | 71 MB | 52 MB binary + 48 MB assets | 131 MB |
+| macOS app | 36.5 MB web dist | 94 MB | 71 MB | 52 MB binary + 48 MB assets (no .app built) | 131 MB |
 | iOS app | – | 103 MB | 76 MB | ≈107 MB | 130 MB |
 | iPhone 16 Pro fps | – | 59.5–59.8 (Low preset + flat HUD + 30 Hz page; 38.4 without) | 60 (vsync cap) | 59.96 avg, min 55.6 | not run on a device |
 | Friction / port-log entries | – | 17 | 29 | 16 | 14 |
+
+† Measured the same way for all five from the Claude Code session logs: first prompt to the agent's last
+message before it was asked to log its effort, minus every stretch where the agent was waiting for the user.
+Raw wall-clock: A1 33 min (no waits), A2 2 h 57, B 1 h 27, C 3 h 20 (68 min of it waiting for an iPhone to be unlocked), E 2 h 56. The
+arms' own logs used different endpoints, so their self-reported times (e.g. E's ≈3 h 09) differ from these.
 
 The asset set itself took 63 model calls, 10.4M input and 191k output tokens, and about 34 min
 ([BUILD_TOKENS](race-assets/BUILD_TOKENS.md)). D is not in this table: its port is unfinished and it has no
@@ -119,8 +125,8 @@ Token counts are sums of the per-call `usage` records in each Claude Code sessio
 * **One run per arm.** These are anecdotes with numbers attached, not statistics. Agents make different
   choices on a second run.
 * **The builder was an AI agent, not a team of humans.** The numbers say as much about how well each stack's
-  docs and errors guide an agent as about the stack itself. Every arm got the same model and the same spec,
-  but different docs.
+  docs and errors guide an agent as about the stack itself. Every arm got the same model. Arms A1–C and E got
+  the same game spec, with different docs; D had its own prompt and ported a different game (folio-2025).
 * **No iPhone 12-class device was tested.** The spec's 55 fps target was measured only on an iPhone 16 Pro (B,
   C, A2), in the iOS simulator (E), or on desktop Chrome with throttling (A1).
 * **Not verified with a real hand on the device:** multi-touch, gamepad, and engine audio by ear (E's audio
