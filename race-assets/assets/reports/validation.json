@@ -1,0 +1,204 @@
+{
+ "gltf": {
+  "cars/car.glb": {
+   "errors": 0,
+   "warnings": 0,
+   "infos": 1,
+   "hints": 0,
+   "messages": [
+    {
+     "code": "UNSUPPORTED_EXTENSION",
+     "severity": "info",
+     "pointer": "/extensionsUsed/1",
+     "message": "Cannot validate an extension as it is not supported by the validator: 'KHR_node_visibility'."
+    }
+   ],
+   "stats": {
+    "triangles": 7452,
+    "drawCalls": 13,
+    "materials": 13,
+    "extensionsUsed": [
+     "KHR_materials_variants",
+     "KHR_node_visibility"
+    ]
+   }
+  },
+  "track/scenery.glb": {
+   "errors": 0,
+   "warnings": 0,
+   "infos": 4,
+   "hints": 0,
+   "messages": [
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/0/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/1/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/2/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/3/uri",
+     "message": "URI is used in GLB container."
+    }
+   ],
+   "stats": {
+    "triangles": 1186,
+    "drawCalls": 32,
+    "materials": 5
+   }
+  },
+  "track/track.glb": {
+   "errors": 0,
+   "warnings": 0,
+   "infos": 20,
+   "hints": 0,
+   "messages": [
+    {
+     "code": "UNSUPPORTED_EXTENSION",
+     "severity": "info",
+     "pointer": "/extensionsUsed/0",
+     "message": "Cannot validate an extension as it is not supported by the validator: 'KHR_node_visibility'."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/0/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/1/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/2/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/3/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/4/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/5/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/6/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/7/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/8/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/9/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/10/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/11/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/12/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/13/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/14/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/15/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/16/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/17/uri",
+     "message": "URI is used in GLB container."
+    },
+    {
+     "code": "URI_GLB",
+     "severity": "info",
+     "pointer": "/images/18/uri",
+     "message": "URI is used in GLB container."
+    }
+   ],
+   "stats": {
+    "triangles": 208978,
+    "drawCalls": 21,
+    "materials": 12,
+    "extensionsUsed": [
+     "KHR_node_visibility"
+    ]
+   }
+  }
+ },
+ "manifest": {
+  "valid": true,
+  "errors": []
+ }
+}

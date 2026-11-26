@@ -1,0 +1,16 @@
+import { launch } from './browser.mjs';
+const out = process.argv[2];
+const { browser, page, logs } = await launch();
+await page.waitForTimeout(1500);
+await page.screenshot({ path: `${out}/menu.png` });
+await page.click('#btn-start');
+await page.waitForTimeout(1200);
+await page.screenshot({ path: `${out}/countdown.png` });
+await page.waitForTimeout(2300);
+await page.keyboard.down('KeyW');
+await page.waitForTimeout(4000);
+await page.screenshot({ path: `${out}/driving.png` });
+console.log(JSON.stringify(await page.evaluate(() => window.__game.debugState()), null, 1));
+console.log(await page.evaluate(() => { const r = window.__game.renderer; return JSON.stringify({gl: r.getContext().getParameter(r.getContext().VERSION), calls: r.info.render.calls}); }));
+console.log(logs.join('\n'));
+await browser.close();

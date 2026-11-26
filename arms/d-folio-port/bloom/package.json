@@ -1,0 +1,10 @@
+{
+  "name": "folio-2025-bloom",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "folio-2025 (../sources, unchanged where possible) as a native app on Bloom via @bloomengine/web and @bloomengine/three.",
+  "perry": {
+    "allow": { "nativeLibrary": ["@bloomengine/*"] }
+  }
+}

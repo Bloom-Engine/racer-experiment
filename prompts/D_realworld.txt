@@ -1,0 +1,15 @@
+This repo is an existing open-source Three.js racing game (commit `{{COMMIT}}`). Make it run as a **native app** (macOS first, then iOS) by compiling it with **Perry** and running it on **Bloom Engine's Three.js bridge**.
+
+Documentation (read-only, outside this repo):
+- Perry: `$HOME/projects/perry/perry/docs/src` (the Perry book, markdown)
+- Bloom: `$HOME/projects/bloom/engine` — `README.md`, `docs/*.md` (skip `docs/perf` and `docs/evidence`), and the API source in `src/`
+- Three.js bridge: `$HOME/projects/bloom/three` (`README.md`, `src/`) and `$HOME/projects/bloom/web` (`README.md`, `src/`; the DOM, input, fetch, storage and Web Audio layer the bridge runs on)
+
+## Rules
+- Change as little as possible; do not redesign the game. Same fix levels as below:
+  (1) works as is, (2) small shim/adapter, (3) swap one dependency for a Bloom equivalent, (4) rewrite a module. Take the lowest level that works.
+- First, before changing anything, write `INVENTORY.md`: every dependency and browser API the game uses (React/R3F, physics lib, workers, WASM, DOM/CSS UI, WebAudio, input events, loaders, storage, etc.) with a prediction: "works / shim / swap / rewrite".
+- Then port, and keep `PORT_LOG.md` in exactly the same format as in Arm A2 (categories, levels, lines changed, "should the bridge handle this?").
+- At the end, compare your inventory predictions with what actually happened, and list the top 5 bridge improvements ordered by how many real-world Three.js games they would likely unblock.
+
+Done = the game is playable natively with its original feature set; list anything that could not be ported.

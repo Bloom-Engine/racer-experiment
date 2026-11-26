@@ -1,0 +1,10 @@
+{
+  "name": "apex-rush-bloom",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Apex Rush (../src, unchanged where possible) as a native app on Bloom via @bloomengine/web and @bloomengine/three.",
+  "perry": {
+    "allow": { "nativeLibrary": ["@bloomengine/*"] }
+  }
+}

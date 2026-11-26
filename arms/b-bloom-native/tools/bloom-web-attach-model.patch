@@ -1,0 +1,69 @@
+diff --git a/native/web/src/lib.rs b/native/web/src/lib.rs
+index 76ae093..144502a 100644
+--- a/native/web/src/lib.rs
++++ b/native/web/src/lib.rs
+@@ -1452,6 +1452,11 @@ pub fn bloom_scene_node_index_count(handle: f64) -> f64 {
+ 
+ #[wasm_bindgen]
+ pub fn bloom_scene_attach_model(node_handle: f64, model_handle: f64, mesh_index: f64) {
++    // Same as the shared native FFI (ffi_core/scene.rs): attach the shared
++    // mesh WITH its glTF node placement (source_transform) and shadow flag.
++    // The old web-only copy cloned the raw vertices and dropped the placement,
++    // so primitives under a transformed glTF node (e.g. car wheels) rendered at
++    // the model origin / orbited their pivot instead of sitting in place.
+     let eng = engine();
+     let mi = mesh_index as usize;
+ 
+@@ -1462,48 +1467,11 @@ pub fn bloom_scene_attach_model(node_handle: f64, model_handle: f64, mesh_index:
+     if mi >= model_data.meshes.len() {
+         return;
+     }
+-    let mesh = &model_data.meshes[mi];
+-
+-    let vertices = mesh.vertices.clone();
+-    let indices = mesh.indices.clone();
+-    let base_color_tex = mesh.texture_idx;
+-    let normal_tex = mesh.normal_texture_idx;
+-    let mr_tex = mesh.metallic_roughness_texture_idx;
+-    let emissive_tex = mesh.emissive_texture_idx;
+-    let emissive_factor = mesh.emissive_factor;
+-    let roughness_factor = mesh.roughness_factor;
+-    let metallic_factor = mesh.metallic_factor;
+-    let alpha_cutoff = mesh.alpha_cutoff;
+-    eng.scene.update_geometry(node_handle, vertices, indices);
+-
+-    if let Some(tex_idx) = base_color_tex {
+-        eng.scene.set_material_texture(node_handle, tex_idx);
+-    }
+-    if let Some(tex_idx) = normal_tex {
+-        eng.scene.set_material_normal_texture(node_handle, tex_idx);
+-    }
+-    if let Some(tex_idx) = mr_tex {
+-        eng.scene
+-            .set_material_metallic_roughness_texture(node_handle, tex_idx);
+-    }
+-    if let Some(tex_idx) = emissive_tex {
+-        eng.scene
+-            .set_material_emissive_texture(node_handle, tex_idx);
+-    }
+-    eng.scene.set_material_emissive_factor(
+-        node_handle,
+-        emissive_factor[0],
+-        emissive_factor[1],
+-        emissive_factor[2],
+-    );
+-    // Carry the glTF material factors + MASK cutoff too (mirrors the shared
+-    // macro) — dropping them left attached foliage opaque (solid cards) and
+-    // every attached mesh at the default roughness 0.8 regardless of its
+-    // authored material.
+-    eng.scene
+-        .set_material_pbr(node_handle, roughness_factor, metallic_factor);
++    let mesh = std::sync::Arc::clone(&model_data.meshes[mi]);
++    let source_transform = model_data.mesh_transform(mi);
++    let source_cast_shadow = model_data.mesh_cast_shadow(mi);
+     eng.scene
+-        .set_material_alpha_cutoff(node_handle, alpha_cutoff);
++        .attach_model_mesh(node_handle, mesh, source_transform, source_cast_shadow);
+ }
+ 
+ // ============================================================

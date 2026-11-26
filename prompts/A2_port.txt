@@ -1,0 +1,22 @@
+This repo contains a finished Three.js racing game (TypeScript, see NOTES.md). Make it run as a **native app** (macOS first, then iOS) by compiling it with **Perry** and running it on **Bloom Engine's Three.js bridge**.
+
+Documentation (read-only, outside this repo):
+- Perry: `$HOME/projects/perry/perry/docs/src` (the Perry book, markdown)
+- Bloom: `$HOME/projects/bloom/engine` — `README.md`, `docs/*.md` (skip `docs/perf` and `docs/evidence`), and the API source in `src/`
+- Three.js bridge: `$HOME/projects/bloom/three` (`README.md`, `src/`) and `$HOME/projects/bloom/web` (`README.md`, `src/`; the DOM, input, fetch, storage and Web Audio layer the bridge runs on)
+
+## Rules
+- **Change as little as possible.** The goal is to find out how well an existing, normally written Three.js game ports. Do not rewrite or redesign gameplay, AI, or structure.
+- Prefer, in this order: (1) it already works, (2) a small shim/adapter, (3) swapping one dependency for a Bloom equivalent, (4) rewriting a module. Always take the lowest level that works.
+- Keep the browser build working where possible.
+- The Definition of Done from NOTES.md / the original spec still applies on the native target, including the fps target on iPhone.
+
+## Port log (required): `PORT_LOG.md`
+For every change, one entry:
+- **What** failed or was missing (error message / behaviour)
+- **Category:** `three-api` · `physics-engine` · `dom-html-css-hud` · `web-audio` · `input-dom-events` · `asset-loading-fetch` · `workers` · `wasm` · `timing-raf` · `storage` · `perry-compiler` · `game-bug` · `other`
+- **Level of fix:** 1–4 as above
+- **Fix** in one or two sentences, lines of code changed
+- **Should the bridge handle this automatically?** yes/no + why
+
+At the end, summarise: number of changes per category, total lines changed, and the top 5 bridge improvements that would have made this port unnecessary.

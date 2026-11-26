@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#0b0f17" />
+    <title>Apex Rush</title>
+    <link rel="icon" type="image/png" href="ui/icons/nitro_64.png" />
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <canvas id="game"></canvas>
+
+    <div id="nitro-vignette"></div>
+
+    <!-- ===== HUD ===== -->
+    <div id="hud" class="hidden">
+      <div class="hud-tl panel">
+        <div class="pos"><span id="hud-pos">1</span><span id="hud-pos-total">/4</span></div>
+        <div class="lapbox">
+          <div class="label">LAP</div>
+          <div id="hud-lap" class="value">1/3</div>
+        </div>
+      </div>
+      <div class="hud-times panel">
+        <div class="row"><span class="label">TIME</span><span id="hud-laptime" class="mono">0:00.000</span></div>
+        <div class="row best"><span class="label">BEST</span><span id="hud-best" class="mono">--:--.---</span></div>
+      </div>
+      <div class="hud-tr">
+        <canvas id="minimap"></canvas>
+        <div class="hud-buttons">
+          <button class="icon-btn" id="btn-pause" aria-label="Pause"><img src="ui/icons/pause.svg" alt="" /></button>
+          <button class="icon-btn" id="btn-camera" aria-label="Camera"><img src="ui/icons/camera.svg" alt="" /></button>
+          <button class="icon-btn" id="btn-reset" aria-label="Reset car"><img src="ui/icons/reset.svg" alt="" /></button>
+        </div>
+      </div>
+      <div class="hud-speedo">
+        <div id="hud-rpm" class="rpm"><div class="rpm-fill"></div></div>
+        <div class="speed-row">
+          <div class="speed"><span id="hud-speed">0</span><small>KM/H</small></div>
+          <div class="gear"><small>GEAR</small><span id="hud-gear">1</span></div>
+        </div>
+        <div id="hud-nitro" class="nitro">
+          <img src="ui/icons/nitro.svg" alt="" />
+          <div class="nitro-bar"><div id="hud-nitro-fill"></div></div>
+        </div>
+        <div id="hud-tags"></div>
+      </div>
+      <div id="hud-center"></div>
+      <div id="hud-sub"></div>
+      <div id="hud-warn"></div>
+    </div>
+
+    <!-- ===== Touch controls ===== -->
+    <div id="touch" class="hidden">
+      <div class="touch-left">
+        <div class="tbtn" data-touch="left"><img src="ui/icons/steer_left.svg" alt="" /></div>
+        <div class="tbtn" data-touch="right"><img src="ui/icons/steer_right.svg" alt="" /></div>
+      </div>
+      <div class="touch-right">
+        <div class="tbtn nitro" data-touch="nitro"><img src="ui/icons/nitro.svg" alt="" /></div>
+        <div class="tbtn brake" data-touch="brake"><img src="ui/icons/brake.svg" alt="" /></div>
+      </div>
+    </div>
+
+    <!-- ===== Screens ===== -->
+    <div id="screen-loading" class="screen show">
+      <div class="logo">APEX<span>RUSH</span></div>
+      <div class="loadbar"><div id="load-fill"></div></div>
+      <div class="hint" id="load-text">Loading…</div>
+    </div>
+
+    <div id="screen-start" class="screen">
+      <div class="logo">APEX<span>RUSH</span></div>
+      <div class="tagline">3 laps · 4 cars · no brakes on the fun</div>
+      <button class="btn primary" id="btn-start">START RACE</button>
+      <div class="difficulty" role="radiogroup" aria-label="Difficulty">
+        <button data-diff="easy">EASY</button>
+        <button data-diff="normal">NORMAL</button>
+        <button data-diff="hard">HARD</button>
+      </div>
+      <div class="best-line">BEST LAP <span id="start-best" class="mono">--:--.---</span></div>
+      <div class="controls-help desktop-only">
+        <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / arrows drive</div>
+        <div><kbd>SPACE</kbd> handbrake / drift</div>
+        <div><kbd>SHIFT</kbd> nitro</div>
+        <div><kbd>C</kbd> camera · <kbd>R</kbd> reset · <kbd>P</kbd> pause · <kbd>M</kbd> mute</div>
+      </div>
+      <div class="controls-help touch-only">
+        <div>Auto-accelerate · steer with the left buttons</div>
+        <div>Brake while steering at speed to <b>drift</b></div>
+        <div>Drift &amp; slipstream to fill <b>nitro</b></div>
+      </div>
+    </div>
+
+    <div id="screen-pause" class="screen dim">
+      <div class="title">PAUSED</div>
+      <button class="btn primary" id="btn-resume">RESUME</button>
+      <button class="btn" id="btn-restart-p">RESTART</button>
+      <button class="btn" id="btn-mute">SOUND: ON</button>
+      <button class="btn" id="btn-menu-p">MAIN MENU</button>
+    </div>
+
+    <div id="screen-finish" class="screen dim">
+      <div class="title" id="finish-title">FINISHED</div>
+      <div class="badge" id="finish-badge"></div>
+      <table class="results">
+        <thead><tr><th>#</th><th>DRIVER</th><th>TIME</th><th>BEST LAP</th></tr></thead>
+        <tbody id="results-body"></tbody>
+      </table>
+      <div class="laps" id="finish-laps"></div>
+      <div class="row-btns">
+        <button class="btn primary" id="btn-restart-f">RESTART</button>
+        <button class="btn" id="btn-menu-f">MAIN MENU</button>
+      </div>
+    </div>
+
+    <div id="fps" class="hidden"></div>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+Build a 3D arcade racing game as a **native app** using **Bloom Engine** in **TypeScript**, compiled with **Perry**. Target macOS first (fast iteration), then iOS. Do **not** use Three.js; use Bloom's own APIs for rendering, physics (Bloom's built-in Jolt integration), input, audio and UI.
+
+Documentation (read-only, outside this repo):
+- Perry: `$HOME/projects/perry/perry/docs/src` (the Perry book, markdown)
+- Bloom: `$HOME/projects/bloom/engine` — `README.md`, `docs/*.md` (skip `docs/perf` and `docs/evidence`), and the API source in `src/`
+
+Read the relevant parts before writing code; only use APIs that exist in the docs or the Bloom source. If something is missing, write a small, clearly separated helper instead of guessing an API.
+
+The assets live in `<racer>/race-assets/assets`. Copy that folder into this repo as `./assets` and treat it as read-only (do not edit or add files there). Start by reading `./assets/manifest.json` and `./assets/README.md`.
+
+## Game specification (identical for every build)
+
+Build a small but complete **arcade racing game** in the style of Asphalt / Need for Speed: fast, forgiving, fun — not a simulator.
+
+### Content
+- Use the assets in `./assets` (see `./assets/manifest.json`). Do not generate or download other 3D models or textures.
+  You may create procedural effects (particles, skid marks, sounds) in code.
+- One circuit, 3 laps.
+- Player car + 3 AI opponents (same car model, colour variants from the manifest).
+
+### Gameplay
+- Countdown 3-2-1-GO, then race.
+- Arcade vehicle handling: acceleration, braking, steering, drifting/handbrake that feels good, top speed ~250 km/h displayed.
+- **Nitro**: a boost bar that fills while drifting and driving close behind opponents; activating it gives a clear speed burst with visual feedback (FOV kick, motion lines or similar).
+- Collisions with track barriers and other cars; cars must not tunnel through walls at top speed.
+- Auto-reset to the track (last checkpoint) if the car is off-track or upside down for > 3 s, plus a manual reset key/button.
+- AI opponents follow the racing line from the manifest with some variation, react to the player (no ghost cars — they collide), and are beatable but not trivial.
+- Checkpoints prevent shortcut cheating; lap only counts if all checkpoints are passed in order.
+
+### Camera
+- Chase camera behind the car with smoothing, speed-dependent FOV, slight shake at high speed and on impacts.
+- One alternative camera (bumper/hood) toggled with a key/button.
+
+### Input
+- Keyboard (arrows/WASD, space = handbrake, shift = nitro, R = reset, C = camera).
+- **Touch** for phones: steer left/right, brake, nitro buttons; acceleration automatic on touch devices. Multi-touch must work (steer + nitro at the same time).
+- Gamepad support if the platform offers it.
+
+### Audio
+- Engine sound whose pitch/volume follows RPM/speed, plus a gear-shift feeling.
+- Sounds for collision, nitro, countdown, finish.
+- Audio from `./assets/audio` where available, otherwise procedural.
+
+### HUD & screens
+- HUD: speed, gear, position (e.g. 2/4), lap (2/3), current lap time, best lap, nitro bar, minimap of the track with car dots.
+- Start screen (Start button), pause (P / button), finish screen with final positions and lap times, Restart.
+- Best lap time persisted between sessions.
+
+### Quality bar
+- Must run smoothly on a mid-range phone (iPhone 12 class): target 60 fps during a full race with 4 cars.
+- Write **TypeScript** with strict mode.
+- Clean structure: separate modules for physics/vehicle, AI, input, audio, camera, HUD/UI, game state.
+- No runtime network access; everything loads from local files.
+
+### Definition of Done (all must be true)
+1. Game starts, countdown plays, race of 3 laps can be completed, finish screen shows correct results.
+2. Player can win and lose against the AI.
+3. Nitro fills and fires as described.
+4. No wall tunnelling at top speed + nitro (test 10 hard impacts).
+5. Reset works (auto and manual).
+6. Checkpoint system prevents shortcuts.
+7. Touch controls work with multi-touch.
+8. Engine audio follows speed.
+9. HUD shows all listed elements correctly, minimap included.
+10. Best lap persists after restart of the app.
+11. Two camera modes.
+12. ≥ 55 fps average on target device over one full lap with 4 cars.
+
+When done, write `NOTES.md`: architecture overview, libraries chosen and why, known issues, and what you would do next.
+
+Work in small, testable steps: car driving on the track first, then laps/checkpoints, then AI, then HUD/audio/polish. Build and run after each step.
+
+## Build metrics (required, in `NOTES.md`)
+Measure on this Mac and report: clean release build time, incremental rebuild time after a one-line change in game code, size of the macOS `.app` and of the iOS build, and the steps needed to get from source to a running iOS build.
+
+## Friction log (required): `BLOOM_FRICTION.md`
+Short entries whenever you: used an API that didn't exist, misread the docs, hit a compiler/engine bug, or had to write a workaround. Per entry: what you expected, what was true, how you found out, time/iterations lost. End with the top 5 doc or API improvements that would have helped most.

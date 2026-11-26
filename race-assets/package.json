@@ -1,0 +1,17 @@
+{
+  "name": "race-assets",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Procedurally generated, standards-based asset set for a small arcade racing game",
+  "license": "CC0-1.0",
+  "scripts": {
+    "assets": "make assets",
+    "validate": "node asset-src/validate.mjs",
+    "verify": "python3 asset-src/verify.py"
+  },
+  "devDependencies": {
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1",
+    "gltf-validator": "2.0.0-dev.3.10"
+  }
+}

@@ -1,0 +1,8 @@
+node_modules/
+dist/
+build/
+target/
+*.log
+.DS_Store
+__pycache__/
+*.mobileprovision

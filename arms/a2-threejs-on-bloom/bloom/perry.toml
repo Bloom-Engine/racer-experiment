@@ -1,0 +1,13 @@
+[project]
+name = "apexrush"
+entry = "main.ts"
+bundle_id = "com.skelpo.apexrush"
+display_name = "Apex Rush"
+version = "1.0"
+build_number = 1
+features = ["ios-game-loop"]
+
+[ios]
+encryption_exempt = true
+device_family = ["iphone", "ipad"]
+orientations = ["landscape"]

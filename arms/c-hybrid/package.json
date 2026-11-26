@@ -1,0 +1,30 @@
+{
+  "name": "arcade-racer-hybrid",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "bloom/main.ts",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "bloom-three build bloom/main.ts -o dist/racer",
+    "run": "npm run build && ./dist/racer"
+  },
+  "dependencies": {
+    "@bloomengine/engine": "0.4.19",
+    "@bloomengine/three": "0.1.1",
+    "@bloomengine/web": "file:../../bloom/web",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/three": "^0.187.0",
+    "typescript": "^5.6.0"
+  },
+  "perry": {
+    "allow": {
+      "nativeLibrary": [
+        "@bloomengine/*"
+      ]
+    }
+  }
+}

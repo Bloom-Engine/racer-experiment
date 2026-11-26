@@ -1,0 +1,26 @@
+{
+  "name": "bloom-racer",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/main.ts",
+  "scripts": {
+    "gen": "node tools/gen-track-data.mjs",
+    "build": "perry compile src/main.ts -o dist/BloomRacer",
+    "run": "perry compile src/main.ts -o dist/BloomRacer && ./dist/BloomRacer"
+  },
+  "dependencies": {
+    "bloom": "file:../../bloom/engine"
+  },
+  "perry": {
+    "allow": {
+      "nativeLibrary": [
+        "bloom",
+        "bloom/*"
+      ]
+    }
+  },
+  "devDependencies": {
+    "jolt-physics": "^1.0.0",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,210 @@
+{
+ "passed": true,
+ "checks": [
+  {
+   "check": "Khronos glTF validator: 0 errors in every .glb",
+   "ok": true,
+   "detail": "cars/car.glb: 0 errors / 0 warnings, track/scenery.glb: 0 errors / 0 warnings, track/track.glb: 0 errors / 0 warnings"
+  },
+  {
+   "check": "manifest.json validates against manifest.schema.json",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "car: required nodes present",
+   "ok": true,
+   "detail": "car, body, wheel_FL, wheel_FR, wheel_RL, wheel_RR, brake_lights, exhaust_L, exhaust_R, collider_body"
+  },
+  {
+   "check": "car: <= 25,000 triangles incl. wheels",
+   "ok": true,
+   "detail": "9208 triangles"
+  },
+  {
+   "check": "car: collider_body <= 200 triangles",
+   "ok": true,
+   "detail": "172 triangles"
+  },
+  {
+   "check": "car: collider_body is a closed convex hull",
+   "ok": true,
+   "detail": "all vertices behind every face plane"
+  },
+  {
+   "check": "car: collider hidden (KHR_node_visibility + invisible MASK material)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "car: wheelbase / track width match manifest",
+   "ok": true,
+   "detail": "wheelbase 2.700 m, track 1.660 m"
+  },
+  {
+   "check": "car: origin at ground level & wheelbase centre",
+   "ok": true,
+   "detail": "lowest tyre point y=-0.0000, wheel centre z=0.0000"
+  },
+  {
+   "check": "car: wheel radius / width match manifest",
+   "ok": true,
+   "detail": "radius 0.340 m, width 0.255 m"
+  },
+  {
+   "check": "car: wheel origins at rotation centre",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "car: faces -Z (headlights at -Z, brake lights at +Z)",
+   "ok": true,
+   "detail": "headlights z=-2.26, brake lights z=2.21"
+  },
+  {
+   "check": "car: 4 colour variants (KHR_materials_variants)",
+   "ok": true,
+   "detail": "red, blue, yellow, black"
+  },
+  {
+   "check": "car: brake_lights use their own material",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "track: required nodes present",
+   "ok": true,
+   "detail": "11 required + 7 scenery_* nodes"
+  },
+  {
+   "check": "track: collision nodes hidden",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "track: whole scene <= 300,000 triangles",
+   "ok": true,
+   "detail": "208978 total (197778 visual + 11200 collision)"
+  },
+  {
+   "check": "track: static scene <= 40 draw calls",
+   "ok": true,
+   "detail": "18 primitives, 11 unique materials"
+  },
+  {
+   "check": "track: length 1.8-2.5 km",
+   "ok": true,
+   "detail": "2210.7 m"
+  },
+  {
+   "check": "track: width 12-16 m",
+   "ok": true,
+   "detail": "14.0 m"
+  },
+  {
+   "check": "track: elevation change within +/-12 m",
+   "ok": true,
+   "detail": "-3.0 .. 10.0 m"
+  },
+  {
+   "check": "track: has straight, hairpin, sweeper, S-section, hill",
+   "ok": true,
+   "detail": "fast_sweeper, hairpin, hill, s_section, start_finish_straight"
+  },
+  {
+   "check": "track: collision walls tall enough to not be jumped (>= 3.5 m above road)",
+   "ok": true,
+   "detail": "wall tops 3.82..4.08 m above the nearest road surface (visual barrier 1 m)"
+  },
+  {
+   "check": "racing line: >= 200 points with speeds",
+   "ok": true,
+   "detail": "442 points, 55-258 km/h"
+  },
+  {
+   "check": "racing line: closed loop",
+   "ok": true,
+   "detail": "last->first gap 5.01 m (median spacing 4.91 m)"
+  },
+  {
+   "check": "racing line: every point lies on col_road",
+   "ok": true,
+   "detail": "442/442 on surface, max |dy| 0.007 m"
+  },
+  {
+   "check": "checkpoints: >= 12, named cp_00..cp_NN",
+   "ok": true,
+   "detail": "16 checkpoints"
+  },
+  {
+   "check": "checkpoints: in race order along the racing line",
+   "ok": true,
+   "detail": "racing-line indices 0 28 55 83 110 138 166 193 221 249 276 304 331 359 387 414"
+  },
+  {
+   "check": "checkpoints: every box has a size in the manifest",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "checkpoints: trigger boxes span the racing line",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "spawns: 4 spawns on col_road (origin + all wheel contact points)",
+   "ok": true,
+   "detail": "spawn_1 dy=+0.000, spawn_2 dy=+0.000, spawn_3 dy=+0.000, spawn_4 dy=+0.000"
+  },
+  {
+   "check": "spawns: facing the race direction (node -Z)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "spawns: behind the start/finish line",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "textures: PNG, power-of-two, <= 2048",
+   "ok": true,
+   "detail": "23 textures + sky ok"
+  },
+  {
+   "check": "minimap: 1024x1024 RGBA, transparent background",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "sky: 2048x1024 equirectangular + low-res env",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "audio: WAV 44.1 kHz mono 16-bit + decodable OGG (same rate/length) for every sound",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "audio: loops are seamless (seam step within normal sample steps)",
+   "ok": true,
+   "detail": "engine_idle 0.007<= p99.9 0.050; engine_mid 0.027<= p99.9 0.191; engine_high 0.091<= p99.9 0.443; tyre_screech_loop 0.027<= p99.9 0.330"
+  },
+  {
+   "check": "ui: 7 icons (SVG + PNG) and OFL font with licence",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "manifest: every file listed, exists, sha256 matches",
+   "ok": true,
+   "detail": "91 files"
+  },
+  {
+   "check": "previews: car x3, track top, start grid",
+   "ok": true,
+   "detail": "car_front34.png, car_rear34.png, car_side.png, car_variants.png, track_hairpin.png, track_start_grid.png, track_top.png"
+  }
+ ]
+}

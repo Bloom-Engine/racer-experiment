@@ -1,0 +1,52 @@
+You are a technical artist. Create the complete asset set for a small **arcade racing game** (Asphalt / Need for Speed style, stylised-realistic, bright daytime look). The assets will be consumed by different game engines, so they must be strictly standards-based and fully described in a manifest.
+
+## Method
+- Generate everything **reproducibly by script** and commit the scripts in `./asset-src` (e.g. Blender in headless mode with Python if available; otherwise Node with `@gltf-transform/core` and procedural geometry; textures via procedural generation in code). Running one command (`make assets` or `npm run assets`) must rebuild `./assets` from scratch.
+- Only use your own procedural output or CC0 sources you can include in the repo with a licence note. No assets with unclear licences.
+
+## Formats & conventions
+- Models: **glTF 2.0 binary (.glb)**, PBR metallic-roughness materials, Y-up, **1 unit = 1 metre**, right-handed (glTF standard).
+- Textures: PNG, power-of-two, max 2048², embedded or next to the .glb. Provide albedo, normal, ORM (occlusion/roughness/metallic packed) where useful.
+- Mobile budget: car ≤ 25k triangles incl. wheels; whole track scene ≤ 300k triangles; ≤ 40 draw calls for the static scene after merging by material.
+- All meshes and nodes have stable, descriptive names (they are referenced in the manifest).
+
+## Required assets
+
+### 1. Car (`./assets/cars/car.glb`)
+- One sporty coupé. Separate nodes: `body`, `wheel_FL`, `wheel_FR`, `wheel_RL`, `wheel_RR` (each wheel's origin at its rotation centre), `brake_lights` (separate material so it can glow), `exhaust_L`/`exhaust_R` empties for effects.
+- Car origin at ground level, centre of the wheelbase, facing **−Z**.
+- Simple **collision proxy** node `collider_body` (low-poly convex hull, ≤ 200 triangles), hidden in the visual scene.
+- 4 colour variants via material variants or separate albedo textures: red (player), blue, yellow, black.
+- In the manifest: wheel radius, wheel width, track width, wheelbase, suggested mass (kg), centre-of-mass offset.
+
+### 2. Track (`./assets/track/track.glb`)
+- A closed circuit of **1.8–2.5 km** with: long straight with start/finish, one hairpin, one fast sweeper, an S-section, a gentle elevation change (bridge or hill, max ±12 m), track width 12–16 m.
+- Visual nodes: `road`, `kerbs`, `barriers`, `terrain`, `scenery_*`.
+- **Collision nodes**, hidden, simplified: `col_road` (drivable surface), `col_barriers` (walls, tall enough not to be jumped), `col_terrain` (off-road, separate so it can get different friction).
+- Start grid: 4 empties `spawn_1` … `spawn_4`, facing race direction.
+- Checkpoints: empties `cp_00` … `cp_NN` (≥ 12, in race order, `cp_00` = finish line), each with a box size in the manifest for trigger volumes.
+- Racing line: a spline of ≥ 200 points with suggested speed per point, exported to `racing_line.json` (`[{x,y,z,speed_kmh}]`).
+- Minimap: a top-down 1024² PNG of the track outline with transparent background + the world-to-map transform in the manifest.
+
+### 3. Scenery & environment
+- Instanced scenery: trees (2 types), grandstand, a few simple buildings, signs/billboards (made-up brand names only), cones. Provide instance transforms in the manifest or as glTF `EXT_mesh_gpu_instancing`.
+- Sky: equirectangular sky texture (PNG, 2048×1024) + a low-res version usable as environment lighting; sun direction and colour in the manifest.
+- Ground materials: asphalt, kerb, grass, gravel (tiling textures, 1024²).
+
+### 4. Audio (`./assets/audio`, WAV 44.1 kHz mono + OGG)
+- Engine: seamless loops at idle, mid and high RPM (to crossfade/pitch).
+- Collision (light, heavy), tyre screech loop, nitro whoosh, countdown beep (3 short + 1 long), finish fanfare (short, original).
+- Procedurally synthesised is fine; must loop cleanly where noted.
+
+### 5. UI
+- Icon set as PNG/SVG: nitro, pause, camera, reset, steer-left, steer-right, brake. Simple, flat, white on transparent.
+- Font: one OFL-licensed font file included with licence.
+
+## Manifest (`./assets/manifest.json`)
+A single JSON describing every file, node name, the metrics above, spawn/checkpoint/racing-line references, sun/sky parameters, minimap transform, colour variants, and licence info. Add a JSON Schema (`manifest.schema.json`) and validate against it.
+
+## Verification (must pass before you finish)
+- Validate every .glb with the Khronos glTF validator: 0 errors.
+- Render preview images (`./assets/previews/*.png`): car from 3 angles, track top view, track from the start grid.
+- Script that checks: racing line is closed and lies on `col_road`; checkpoints are in order along the racing line; spawns are on the road; triangle budgets are met. Print a report.
+- Write `./assets/README.md` summarising contents, conventions and the rebuild command.

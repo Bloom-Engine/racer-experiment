@@ -1,0 +1,139 @@
+{
+ "stamp": "2026-11-09T18-17-21",
+ "smoke": false,
+ "host": {
+  "cpu": "Apple M1 Max",
+  "cores": 10,
+  "memGB": 64,
+  "os": "25.5.0",
+  "chrome": "Google Chrome 156.0.8078.80",
+  "dpr": "1",
+  "window": "1280x800"
+ },
+ "runs": [
+  {
+   "round": 1,
+   "key": "blank",
+   "phase": "idle",
+   "system": {
+    "idlePct": 0,
+    "load1": 20.69189453125,
+    "busy": false
+   },
+   "idle": {
+    "cpuPct": {
+     "page": 0.29766841539419,
+     "gpu": 0.19844561026279325,
+     "browser": 1.8852332974965362,
+     "other": 0.148834207697095,
+     "total": 2.530181530850615
+    },
+    "mem": {
+     "totalMedianMB": 352.3063049316406,
+     "totalMaxMB": 389.4793472290039,
+     "pageMedianMB": 114.75359344482422,
+     "gpuMedianMB": 81.3604736328125,
+     "browserOtherMedianMB": 156.0672378540039,
+     "pagePeakMB": 61.84510040283203,
+     "totalLastMB": 348.7750549316406,
+     "samples": 9
+    },
+    "frames": null
+   },
+   "systemAfterIdlePct": 2.43
+  },
+  {
+   "round": 1,
+   "key": "threejs",
+   "phase": "idle",
+   "system": {
+    "idlePct": 3.99,
+    "load1": 43.06005859375,
+    "busy": false
+   },
+   "loadMs": 1220.3440420000043,
+   "loadCpuSec": 1.71,
+   "gpu": {
+    "webgpu": true,
+    "webgpuAdapter": "apple metal-3",
+    "webgl": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+   },
+   "idle": {
+    "cpuPct": {
+     "page": 14.482156879204307,
+     "gpu": 18.30108180967942,
+     "browser": 0.2975785660110477,
+     "other": 1.1903142640441897,
+     "total": 34.27113151893897
+    },
+    "mem": {
+     "totalMedianMB": 934.8312873840332,
+     "totalMaxMB": 981.7464828491211,
+     "pageMedianMB": 324.5821990966797,
+     "gpuMedianMB": 429.54036712646484,
+     "browserOtherMedianMB": 178.95092010498047,
+     "pagePeakMB": 258.37662506103516,
+     "totalLastMB": 933.823486328125,
+     "samples": 8
+    },
+    "frames": {
+     "frames": 2448,
+     "fps": 119.9762695077884,
+     "p50ms": 8.299999999999272,
+     "p95ms": 9.19999999999709,
+     "p99ms": 9.299999999999272,
+     "maxMs": 10.400000000000546,
+     "over25ms": 0
+    }
+   },
+   "systemAfterIdlePct": 4.43
+  },
+  {
+   "round": 1,
+   "key": "bloom",
+   "phase": "idle",
+   "system": {
+    "idlePct": 2.82,
+    "load1": 53.8681640625,
+    "busy": false
+   },
+   "loadMs": 3843.627792000014,
+   "loadCpuSec": 4.590000000000001,
+   "gpu": {
+    "webgpu": true,
+    "webgpuAdapter": "apple metal-3",
+    "webgl": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+   },
+   "idle": {
+    "cpuPct": {
+     "page": 54.02264403148558,
+     "gpu": 32.03552739988647,
+     "browser": 4.178547052159105,
+     "other": 2.6862088192451394,
+     "total": 92.92292730277629
+    },
+    "mem": {
+     "totalMedianMB": 1307.5437469482422,
+     "totalMaxMB": 1325.2458190917969,
+     "pageMedianMB": 520.2544631958008,
+     "gpuMedianMB": 607.3138275146484,
+     "browserOtherMedianMB": 181.30252838134766,
+     "pagePeakMB": 445.59571838378906,
+     "totalLastMB": 1325.2458190917969,
+     "samples": 9
+    },
+    "frames": {
+     "frames": 2640,
+     "fps": 119.99981811319725,
+     "p50ms": 8.299999999999272,
+     "p95ms": 9.100000000000364,
+     "p99ms": 9.299999999999272,
+     "maxMs": 9.400000000001455,
+     "over25ms": 0
+    }
+   },
+   "systemAfterIdlePct": 46.16
+  }
+ ],
+ "summary": {}
+}

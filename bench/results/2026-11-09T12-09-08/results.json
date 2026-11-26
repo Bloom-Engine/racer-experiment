@@ -1,0 +1,70 @@
+{
+ "stamp": "2026-11-09T12-09-08",
+ "host": {
+  "cpu": "Apple M1 Max",
+  "cores": 10,
+  "memGB": 64,
+  "load": [
+   145.3623046875,
+   221.08056640625,
+   219.505859375
+  ]
+ },
+ "runs": 1,
+ "targets": {
+  "A1": {
+   "name": "A1 Three.js (web, Chrome)",
+   "sizes": {
+    "web dist": 38293504,
+    "web code (js/css/html) gzip": 197179
+   },
+   "startupColdMs": [
+    4064.7157079999997
+   ],
+   "startupPageMs": [
+    2539.787709
+   ],
+   "idleRssMB": 1287.09375,
+   "idleFootprintMB": 1154.8393630981445
+  },
+  "A2": {
+   "name": "A2 Three.js → Perry/Bloom bridge",
+   "sizes": {
+    "exe": 60596224,
+    "macOS .app": 98177024,
+    "iOS .app": 107642880
+   },
+   "startupMs": [
+    3046.858208999998
+   ],
+   "idleRssMB": 332.53125,
+   "idleFootprintMB": 905.4546127319336
+  },
+  "B": {
+   "name": "B Bloom native (TS, Perry)",
+   "sizes": {
+    "exe": 23748608,
+    "macOS .app": 74559488,
+    "iOS .app": 79568896
+   },
+   "startupMs": [
+    3067.1400409999915
+   ],
+   "idleRssMB": 284.609375,
+   "idleFootprintMB": 952.2514419555664
+  },
+  "E": {
+   "name": "E Bevy (Rust)",
+   "sizes": {
+    "exe": 99393536,
+    "macOS .app": 137162752,
+    "iOS .app": 136740864
+   },
+   "startupMs": [
+    3197.594207999995
+   ],
+   "idleRssMB": 427.21875,
+   "idleFootprintMB": 903.4544296264648
+  }
+ }
+}

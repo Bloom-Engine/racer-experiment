@@ -1,0 +1,52 @@
+[package]
+name = "racer"
+version = "0.1.0"
+edition = "2024"
+description = "Apex Rush - a small arcade racer built with Bevy"
+publish = false
+
+[lib]
+name = "racer"
+path = "src/lib.rs"
+
+[[bin]]
+name = "racer"
+path = "src/main.rs"
+
+[dependencies]
+# Engine. Exact pin: Bevy breaks API between minor releases.
+# Default features (2d/3d/ui/audio/picking/gltf/gilrs) + `wav` so the sample-exact
+# engine loops from ./assets/audio can be used.
+bevy = { version = "=0.20.1", features = ["wav"] }
+# Physics. 0.8.0 is the avian release that targets Bevy 0.20.
+# The debug renderer / picking / scene integration are not needed.
+avian3d = { version = "=0.8.0", default-features = false, features = [
+    "3d",
+    "parry-f32",
+    "parallel",
+    "collider-from-mesh",
+    "xpbd_joints",
+] }
+# Manifest / racing-line JSON parsing and the best-lap save file.
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+# Bevy systems routinely take many parameters and complex query types.
+too_many_arguments = "allow"
+type_complexity = "allow"
+
+# Fast iteration: optimise dependencies even in dev builds, keep our crate quick to compile.
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.release]
+lto = "thin"
+codegen-units = 16
+strip = true

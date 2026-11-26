@@ -1,0 +1,45 @@
+race-assets verification report
+================================
+[PASS] Khronos glTF validator: 0 errors in every .glb                                      cars/car.glb: 0 errors / 0 warnings, track/scenery.glb: 0 errors / 0 warnings, track/track.glb: 0 errors / 0 warnings
+[PASS] manifest.json validates against manifest.schema.json                                
+[PASS] car: required nodes present                                                         car, body, wheel_FL, wheel_FR, wheel_RL, wheel_RR, brake_lights, exhaust_L, exhaust_R, collider_body
+[PASS] car: <= 25,000 triangles incl. wheels                                               9208 triangles
+[PASS] car: collider_body <= 200 triangles                                                 172 triangles
+[PASS] car: collider_body is a closed convex hull                                          all vertices behind every face plane
+[PASS] car: collider hidden (KHR_node_visibility + invisible MASK material)                
+[PASS] car: wheelbase / track width match manifest                                         wheelbase 2.700 m, track 1.660 m
+[PASS] car: origin at ground level & wheelbase centre                                      lowest tyre point y=-0.0000, wheel centre z=0.0000
+[PASS] car: wheel radius / width match manifest                                            radius 0.340 m, width 0.255 m
+[PASS] car: wheel origins at rotation centre                                               
+[PASS] car: faces -Z (headlights at -Z, brake lights at +Z)                                headlights z=-2.26, brake lights z=2.21
+[PASS] car: 4 colour variants (KHR_materials_variants)                                     red, blue, yellow, black
+[PASS] car: brake_lights use their own material                                            
+[PASS] track: required nodes present                                                       11 required + 7 scenery_* nodes
+[PASS] track: collision nodes hidden                                                       
+[PASS] track: whole scene <= 300,000 triangles                                             208978 total (197778 visual + 11200 collision)
+[PASS] track: static scene <= 40 draw calls                                                18 primitives, 11 unique materials
+[PASS] track: length 1.8-2.5 km                                                            2210.7 m
+[PASS] track: width 12-16 m                                                                14.0 m
+[PASS] track: elevation change within +/-12 m                                              -3.0 .. 10.0 m
+[PASS] track: has straight, hairpin, sweeper, S-section, hill                              fast_sweeper, hairpin, hill, s_section, start_finish_straight
+[PASS] track: collision walls tall enough to not be jumped (>= 3.5 m above road)           wall tops 3.82..4.08 m above the nearest road surface (visual barrier 1 m)
+[PASS] racing line: >= 200 points with speeds                                              442 points, 55-258 km/h
+[PASS] racing line: closed loop                                                            last->first gap 5.01 m (median spacing 4.91 m)
+[PASS] racing line: every point lies on col_road                                           442/442 on surface, max |dy| 0.007 m
+[PASS] checkpoints: >= 12, named cp_00..cp_NN                                              16 checkpoints
+[PASS] checkpoints: in race order along the racing line                                    racing-line indices 0 28 55 83 110 138 166 193 221 249 276 304 331 359 387 414
+[PASS] checkpoints: every box has a size in the manifest                                   
+[PASS] checkpoints: trigger boxes span the racing line                                     
+[PASS] spawns: 4 spawns on col_road (origin + all wheel contact points)                    spawn_1 dy=+0.000, spawn_2 dy=+0.000, spawn_3 dy=+0.000, spawn_4 dy=+0.000
+[PASS] spawns: facing the race direction (node -Z)                                         
+[PASS] spawns: behind the start/finish line                                                
+[PASS] textures: PNG, power-of-two, <= 2048                                                23 textures + sky ok
+[PASS] minimap: 1024x1024 RGBA, transparent background                                     
+[PASS] sky: 2048x1024 equirectangular + low-res env                                        
+[PASS] audio: WAV 44.1 kHz mono 16-bit + decodable OGG (same rate/length) for every sound  
+[PASS] audio: loops are seamless (seam step within normal sample steps)                    engine_idle 0.007<= p99.9 0.050; engine_mid 0.027<= p99.9 0.191; engine_high 0.091<= p99.9 0.443; tyre_screech_loop 0.027<= p99.9 0.330
+[PASS] ui: 7 icons (SVG + PNG) and OFL font with licence                                   
+[PASS] manifest: every file listed, exists, sha256 matches                                 91 files
+[PASS] previews: car x3, track top, start grid                                             car_front34.png, car_rear34.png, car_side.png, car_variants.png, track_hairpin.png, track_start_grid.png, track_top.png
+
+41/41 checks passed

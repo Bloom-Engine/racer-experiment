@@ -1,0 +1,12 @@
+[project]
+name = "racer"
+version = "0.1.0"
+bundle_id = "com.skelpo.racer.hybrid"
+entry = "bloom/main.ts"
+
+[build]
+out_dir = "dist"
+
+[ios]
+orientations = ["landscape-left", "landscape-right"]
+device_family = ["iphone", "ipad"]

@@ -1,0 +1,13 @@
+[project]
+name = "folio"
+entry = "main.ts"
+bundle_id = "com.skelpo.folio2025"
+display_name = "Bruno's"
+version = "1.0"
+build_number = 1
+features = ["ios-game-loop"]
+
+[ios]
+encryption_exempt = true
+device_family = ["iphone", "ipad"]
+orientations = ["landscape"]

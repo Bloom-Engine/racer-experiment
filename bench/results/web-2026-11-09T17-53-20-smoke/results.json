@@ -1,0 +1,65 @@
+{
+ "stamp": "2026-11-09T17-53-20",
+ "smoke": true,
+ "host": {
+  "cpu": "Apple M1 Max",
+  "cores": 10,
+  "memGB": 64,
+  "os": "25.5.0",
+  "chrome": "Google Chrome 156.0.8078.80",
+  "dpr": "1",
+  "window": "1280x800"
+ },
+ "runs": [
+  {
+   "round": 1,
+   "key": "bloom",
+   "phase": "race",
+   "system": {
+    "idlePct": 0,
+    "load1": 93.49462890625,
+    "busy": false
+   },
+   "race": {
+    "check": {
+     "state": "racing",
+     "gameSeconds": 30,
+     "ok": true,
+     "hiddenEvents": 0
+    },
+    "ended": "cap",
+    "seconds": 30.386725292,
+    "cpuPct": {
+     "page": 59.89457509852687,
+     "gpu": 31.13201540835518,
+     "browser": 1.6454553598496395,
+     "other": 1.3163642878797115,
+     "total": 93.9884101546114
+    },
+    "cpuMsPerFrame": 7.523709167544784,
+    "pageCpuMsPerFrame": 4.794520547945205,
+    "mem": {
+     "totalMedianMB": 1330.5440216064453,
+     "totalMaxMB": 1360.32421875,
+     "pageMedianMB": 526.2701225280762,
+     "gpuMedianMB": 606.5403442382812,
+     "browserOtherMedianMB": 181.427734375,
+     "pagePeakMB": 460.5177307128906,
+     "totalLastMB": 1360.32421875,
+     "samples": 12
+    },
+    "frames": {
+     "frames": 3796,
+     "fps": 119.98216865793857,
+     "p50ms": 8.299999999999272,
+     "p95ms": 9.19999999999709,
+     "p99ms": 9.300000000000182,
+     "maxMs": 10.800000000000182,
+     "over25ms": 0
+    }
+   },
+   "systemAfterIdlePct": 7.91
+  }
+ ],
+ "summary": {}
+}
